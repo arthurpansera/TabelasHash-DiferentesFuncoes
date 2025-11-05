@@ -40,24 +40,12 @@ public abstract class TabelaHash {
         return tabela[indice].contains(chave);
     }
 
-    public int getTotalColisoes() {
-        return totalColisoes;
-    }
-
-    public int[] getColisoesporPosicao() {
-        return colisoesporPosicao;
-    }
-
     public int[] getDistribuicao() {
         int[] distribuicao = new int[capacidade];
         for (int i = 0; i < capacidade; i++) {
             distribuicao[i] = tabela[i].size();
         }
         return distribuicao;
-    }
-
-    public int getTotalElementos() {
-        return totalElementos;
     }
 
     public double getFatorCarga() {
@@ -89,12 +77,24 @@ public abstract class TabelaHash {
         this.capacidade = capacidade;
     }
 
+    public int getTotalColisoes() {
+        return totalColisoes;
+    }
+
     public void setTotalColisoes(int totalColisoes) {
         this.totalColisoes = totalColisoes;
     }
 
+    public int[] getColisoesporPosicao() {
+        return colisoesporPosicao;
+    }
+
     public void setColisoesporPosicao(int[] colisoesporPosicao) {
         this.colisoesporPosicao = colisoesporPosicao;
+    }
+
+    public int getTotalElementos() {
+        return totalElementos;
     }
 
     public void setTotalElementos(int totalElementos) {
