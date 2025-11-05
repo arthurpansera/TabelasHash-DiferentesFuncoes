@@ -21,46 +21,6 @@ public abstract class TabelaHash {
         }
     }
 
-    protected abstract int funcaoHash(String chave);
-
-    public void inserir(String chave) {
-        int indice = funcaoHash(chave);
-
-        if (!tabela[indice].isEmpty()) {
-            totalColisoes++;
-            colisoesporPosicao[indice]++;
-        }
-
-        tabela[indice].add(chave);
-        totalElementos++;
-    }
-
-    public boolean buscar(String chave) {
-        int indice = funcaoHash(chave);
-        return tabela[indice].contains(chave);
-    }
-
-    public int[] getDistribuicao() {
-        int[] distribuicao = new int[capacidade];
-        for (int i = 0; i < capacidade; i++) {
-            distribuicao[i] = tabela[i].size();
-        }
-        return distribuicao;
-    }
-
-    public double getFatorCarga() {
-        return (double) totalElementos / capacidade;
-    }
-
-    public void limpar() {
-        for (int i = 0; i < capacidade; i++) {
-            tabela[i].clear();
-            colisoesporPosicao[i] = 0;
-        }
-        totalColisoes = 0;
-        totalElementos = 0;
-    }
-
     public List<String>[] getTabela() {
         return tabela;
     }
@@ -99,6 +59,58 @@ public abstract class TabelaHash {
 
     public void setTotalElementos(int totalElementos) {
         this.totalElementos = totalElementos;
+    }
+
+    // Função hash implementada pelas subclasses
+    protected abstract int funcaoHash(String chave);
+
+    // Retorna o nome da função
+    public abstract String getNomeFuncao();
+
+    // Insere uma chave na tabela
+    public void inserir(String chave) {
+        int indice = funcaoHash(chave);
+
+        if (!tabela[indice].isEmpty()) { // houve colisão
+            totalColisoes++;
+            colisoesporPosicao[indice]++;
+        }
+
+        tabela[indice].add(chave);
+        totalElementos++;
+    }
+
+    // Busca a chave na tabela
+    public boolean buscar(String chave) {
+        int indice = funcaoHash(chave);
+        return tabela[indice].contains(chave);
+    }
+
+    // Quantidade de elementos em cada posição
+    public int[] getDistribuicao() {
+        int[] distribuicao = new int[capacidade];
+
+        for (int i = 0; i < capacidade; i++) {
+            distribuicao[i] = tabela[i].size();
+        }
+
+        return distribuicao;
+    }
+
+    // Fator de carga = elementos / capacidade
+    public double getFatorCarga() {
+        return (double) totalElementos / capacidade;
+    }
+
+    // Limpa a tabela
+    public void limpar() {
+        for (int i = 0; i < capacidade; i++) {
+            tabela[i].clear();
+            colisoesporPosicao[i] = 0;
+        }
+        
+        totalColisoes = 0;
+        totalElementos = 0;
     }
 
 }
